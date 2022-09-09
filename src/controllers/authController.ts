@@ -1,7 +1,10 @@
 import { Request, Response } from "express";
+import * as userService from '../services/userService'
 
 export async function createUser(req: Request, res: Response) {
-
-    res.sendStatus(200);
     
-}
+    const data = req.body;
+    await userService.createUser(data);
+    res.sendStatus(201);
+    
+};
