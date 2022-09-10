@@ -23,6 +23,7 @@ function errorTypeToStatusCode(errorType: string){
     if(errorType === 'unprocessable_entity') return 422;
     if(errorType === 'conflict') return 409;
     if(errorType === 'not_found') return 404;
+    if(errorType === 'forbidden') return 403;
     if(errorType === 'unauthorized') return 401;
 
     return 400

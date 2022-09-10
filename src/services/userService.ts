@@ -30,12 +30,16 @@ export async function login(data:IUserData) {
         throw{ type: 'unauthorized'}
     }
 
-    const acess_key = process.env.ACESS_TOKEN_KEY || 'my-secret-acess-key';
-    const token = jwt.sign((`${user.id}`), acess_key)
-    const result = {
-        token,
-        id: user.id
-    }
+    const tokenData = {userId: user.id}
 
-    return result;
+    const SECRET : string = process.env.TOKEN_SECRET_KEY ?? '';
+    const EXPIRES_IN = process.env.TOKEN_EXPIRES ?? '';
+    const jwtConfig = {
+        expiresIn: '30 minutes'
+    };
+    console.log(SECRET, jwtConfig)
+    
+    const token = jwt.sign(tokenData, SECRET, jwtConfig);
+
+    return token;
 };
