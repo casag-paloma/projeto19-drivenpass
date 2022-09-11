@@ -35,7 +35,7 @@ export async function login(data:IUserData) {
     const SECRET : string = process.env.TOKEN_SECRET_KEY ?? '';
     const EXPIRES_IN = process.env.TOKEN_EXPIRES ?? '';
     const jwtConfig = {
-        expiresIn: '30 minutes'
+        expiresIn: '300 minutes'
     };
     console.log(SECRET, jwtConfig)
     
