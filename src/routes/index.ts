@@ -1,7 +1,7 @@
 import { Router } from "express";
 import authRouter from "./authRoute";
 import credentialRouter from "./credentialRoute";
-import secureNoteRouter from "./secureNote";
+import secureNoteRouter from "./secureNoteRoute";
 
 const router = Router();
 

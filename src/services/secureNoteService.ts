@@ -15,3 +15,9 @@ export async function createSecureNote(userId:number, data:ISecureNoteData){
 
 };
 
+export async function getSecureNotes(userId:number) {
+    const secureNotes = await secureNoteRepository.getSecureNotesByUserId(userId);
+    console.log(secureNotes);
+
+    return secureNotes;
+};

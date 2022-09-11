@@ -14,7 +14,9 @@ export async function createSecureNote (req: Request, res: Response) {
 export async function getSecureNote (req: Request, res: Response) {
     const {userId} = res.locals.tokenData;
 
-    res.status(200).send('SecureNote');
+    const secureNotes = await secureNoteService.getSecureNotes(userId)
+
+    res.status(200).send(secureNotes);
 };
 
 export async function getSecureNoteById (req: Request, res: Response) {
