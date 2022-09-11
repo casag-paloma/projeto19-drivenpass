@@ -19,8 +19,14 @@ export async function getCredential (req: Request, res: Response) {
 };
 
 export async function getCredentialById (req: Request, res: Response) {
+    const {userId} = res.locals.tokenData;
+    const id = req.params.id;
 
-    res.sendStatus(200);
+    if(isNaN(Number(id))) return res.sendStatus(400);
+    
+    const credential = await credentialService.getCredentialById(Number(id), userId);
+
+    res.status(200).send(credential);
 };
 
 export async function deleteCredential (req: Request, res: Response) {

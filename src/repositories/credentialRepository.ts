@@ -28,11 +28,25 @@ export async function getCredentialsByUserId(userId: number) {
 
 export async function getCredentialsById( id: number) {
 
-    const credential = await prisma.credential.findUnique({where:{
+    const credential = await prisma.credential.findMany({where:{
         id
     }});
+    console.log(credential);
+    return credential;
+};
+
+export async function getCredentialsByIdAndUserId(id:number,userId: number) {
+    console.log(id, userId)
+
+    const credential = await prisma.credential.findFirst({where:{
+        id,
+        userId
+    }});
+    console.log(credential)
 
     return credential;
 };
+
+
 
 

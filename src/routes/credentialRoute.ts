@@ -9,7 +9,7 @@ const credentialRouter = Router();
 credentialRouter.post('/credential', authUser, joiValidation(credentialSchema), createCredential);
 
 credentialRouter.get('/credential', authUser, getCredential);
-credentialRouter.get('/credential', authUser, joiValidation(credentialSchema), getCredentialById);
+credentialRouter.get('/credential/:id', authUser, getCredentialById);
 
 credentialRouter.delete('/credential', authUser, joiValidation(credentialSchema), deleteCredential);
 

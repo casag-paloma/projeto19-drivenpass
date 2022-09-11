@@ -30,7 +30,7 @@ function decryptPassword(data: ICredentialData){
     console.log(CRYPTR_SECRET_KEY);
 
     const decryptedPassword = cryptr.decrypt(data.password);
-    
+
     console.log(decryptedPassword);
     return {
         title: data.title,
@@ -39,6 +39,7 @@ function decryptPassword(data: ICredentialData){
         password: decryptedPassword
     }
 }
+
 export async function getCredential(userId:number) {
     const result = await credentialRepository.getCredentialsByUserId(userId);
     console.log(result);
@@ -47,7 +48,17 @@ export async function getCredential(userId:number) {
     return credentials;
 };
 
+export async function getCredentialById(id:number, userId:number) {
 
-export async function getCredentialById() {};
+    const credentialId = await credentialRepository.getCredentialsById(id)
+    if(!credentialId) throw {type: "not_found"};
+
+    const credential = await credentialRepository.getCredentialsByIdAndUserId(id, userId);
+    if(!credential) throw {type: "unauthorized"};
+
+    const result = decryptPassword(credential);
+
+    return result;    
+};
 
 export async function deleteCredential() {};
