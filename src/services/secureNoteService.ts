@@ -21,3 +21,15 @@ export async function getSecureNotes(userId:number) {
 
     return secureNotes;
 };
+
+export async function getSecureNoteById(id:number, userId:number) {
+
+    const secureNoteId = await secureNoteRepository.getSecureNoteById(id)
+    if(!secureNoteId) throw {type: "not_found"};
+
+    const secureNote = await secureNoteRepository.getSecureNoteByIdAndUserId(id, userId);
+    if(!secureNote) throw {type: "unauthorized"};
+
+    return secureNote;    
+};
+

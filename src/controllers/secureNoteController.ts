@@ -26,7 +26,8 @@ export async function getSecureNoteById (req: Request, res: Response) {
     if(isNaN(Number(id))) return res.sendStatus(422);
     
 
-    res.status(200).send("SecureNote");
+    const secureNote = await secureNoteService.getSecureNoteById(Number(id), userId)
+    res.status(200).send(secureNote);
 };
 
 export async function deleteSecureNote (req: Request, res: Response) {
@@ -35,6 +36,7 @@ export async function deleteSecureNote (req: Request, res: Response) {
     const id = req.params.id;
 
     if(isNaN(Number(id))) return res.sendStatus(422);
+
     
     res.sendStatus(204);
 };
