@@ -37,6 +37,7 @@ export async function deleteSecureNote (req: Request, res: Response) {
 
     if(isNaN(Number(id))) return res.sendStatus(422);
 
+    await secureNoteService.deleteSecureNote(Number(id), userId)
     
     res.sendStatus(204);
 };
