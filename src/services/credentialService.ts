@@ -26,6 +26,28 @@ export async function createCredential(userId:number, data:ICredentialData){
 
 };
 
-export async function getCredential() {};
+function decryptPassword(data: ICredentialData){
+    console.log(CRYPTR_SECRET_KEY);
+
+    const decryptedPassword = cryptr.decrypt(data.password);
+    
+    console.log(decryptedPassword);
+    return {
+        title: data.title,
+        url: data.url,
+        username: data.username,
+        password: decryptedPassword
+    }
+}
+export async function getCredential(userId:number) {
+    const result = await credentialRepository.getCredentialsByUserId(userId);
+    console.log(result);
+    const credentials = result.map((data: ICredentialData) => decryptPassword(data))
+
+    return credentials;
+};
+
+
+export async function getCredentialById() {};
 
 export async function deleteCredential() {};

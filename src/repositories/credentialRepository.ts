@@ -15,7 +15,24 @@ export async function getCredentialByTitle(userId: number, title:string) {
     }});
 
     return credential;
+};
 
+export async function getCredentialsByUserId(userId: number) {
+
+    const credentials = await prisma.credential.findMany({where:{
+        userId
+    }});
+
+    return credentials;
+};
+
+export async function getCredentialsById( id: number) {
+
+    const credential = await prisma.credential.findUnique({where:{
+        id
+    }});
+
+    return credential;
 };
 
 
