@@ -11,6 +11,6 @@ credentialRouter.post('/credential', authUser, joiValidation(credentialSchema), 
 credentialRouter.get('/credential', authUser, getCredential);
 credentialRouter.get('/credential/:id', authUser, getCredentialById);
 
-credentialRouter.delete('/credential', authUser, joiValidation(credentialSchema), deleteCredential);
+credentialRouter.delete('/credential/:id', authUser, deleteCredential);
 
 export default credentialRouter;

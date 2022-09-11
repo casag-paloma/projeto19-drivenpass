@@ -61,4 +61,13 @@ export async function getCredentialById(id:number, userId:number) {
     return result;    
 };
 
-export async function deleteCredential() {};
+export async function deleteCredential(id:number, userId:number) {
+
+    const credentialId = await credentialRepository.getCredentialsById(id)
+    if(!credentialId) throw {type: "not_found"};
+
+    const credential = await credentialRepository.getCredentialsByIdAndUserId(id, userId);
+    if(!credential) throw {type: "unauthorized"};
+
+    await credentialRepository.deleteCredential(id, userId);
+};

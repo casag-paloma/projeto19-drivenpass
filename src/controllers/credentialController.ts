@@ -22,7 +22,7 @@ export async function getCredentialById (req: Request, res: Response) {
     const {userId} = res.locals.tokenData;
     const id = req.params.id;
 
-    if(isNaN(Number(id))) return res.sendStatus(400);
+    if(isNaN(Number(id))) return res.sendStatus(422);
     
     const credential = await credentialService.getCredentialById(Number(id), userId);
 
@@ -30,5 +30,13 @@ export async function getCredentialById (req: Request, res: Response) {
 };
 
 export async function deleteCredential (req: Request, res: Response) {
+
+    const {userId} = res.locals.tokenData;
+    const id = req.params.id;
+
+    if(isNaN(Number(id))) return res.sendStatus(422);
+    
+    await credentialService.deleteCredential(Number(id), userId);
+
     res.sendStatus(204);
 };

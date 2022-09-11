@@ -28,7 +28,7 @@ export async function getCredentialsByUserId(userId: number) {
 
 export async function getCredentialsById( id: number) {
 
-    const credential = await prisma.credential.findMany({where:{
+    const credential = await prisma.credential.findFirst({where:{
         id
     }});
     console.log(credential);
@@ -46,6 +46,18 @@ export async function getCredentialsByIdAndUserId(id:number,userId: number) {
 
     return credential;
 };
+
+export async function deleteCredential(id:number,userId: number) {
+    console.log(id, userId)
+
+    const credential = await prisma.credential.delete({where:{
+        id
+    }});
+    console.log(credential)
+
+    return credential;
+};
+
 
 
 
