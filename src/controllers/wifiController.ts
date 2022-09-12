@@ -14,7 +14,9 @@ export async function createWifi (req: Request, res: Response) {
 export async function getWifi (req: Request, res: Response) {
     const {userId} = res.locals.tokenData;
 
-    res.status(200).send("wifis");
+    const wifis = await wifiService.getWifis(userId);
+
+    res.status(200).send(wifis);
 };
 
 export async function getWifiById (req: Request, res: Response) {

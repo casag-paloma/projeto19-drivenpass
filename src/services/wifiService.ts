@@ -20,3 +20,24 @@ export async function createWifi(userId:number, data:IWifiData){
     await wifiRepository.createWifi(wifiData);
 
 };
+
+function decryptPassword(data: IWifiData){
+    console.log(CRYPTR_SECRET_KEY);
+
+    const decryptedPassword = cryptr.decrypt(data.password);
+
+    console.log(decryptedPassword);
+    return {
+        title: data.title,
+        name: data.name,
+        password: decryptedPassword
+    }
+}
+
+export async function getWifis(userId:number) {
+    const result = await wifiRepository.getWifisByUserId(userId);
+    console.log(result);
+    const wifis = result.map((data: IWifiData) => decryptPassword(data))
+
+    return wifis;
+};
