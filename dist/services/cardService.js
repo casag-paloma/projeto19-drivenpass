@@ -51,7 +51,7 @@ function createCard(userId, data) {
     return __awaiter(this, void 0, void 0, function* () {
         const card = yield cardRepository.getCardByTitle(userId, data.title);
         if (card)
-            throw { type: 'conflict' };
+            throw { type: 'conflict', message: 'this title is already in use' };
         const encryptSecurityCode = cryptr.encrypt(data.securityCode);
         const encryptPassword = cryptr.encrypt(data.password);
         if (typeof (data.isVirtual) === 'string') {

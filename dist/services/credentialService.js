@@ -45,7 +45,7 @@ function createCredential(userId, data) {
     return __awaiter(this, void 0, void 0, function* () {
         const credentialTitle = yield credentialRepository.getCredentialByTitle(userId, data.title);
         if (credentialTitle)
-            throw { type: 'conflict' };
+            throw { type: 'conflict', message: 'this title is already in use' };
         const encryptPassword = cryptr.encrypt(data.password);
         const credentialData = {
             userId,

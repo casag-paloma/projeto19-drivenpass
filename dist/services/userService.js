@@ -59,7 +59,7 @@ function login(data) {
     return __awaiter(this, void 0, void 0, function* () {
         const user = yield userRepository.getUserByEmail(data.email);
         if (!user)
-            throw { type: 'not_found' };
+            throw { type: 'not_found', message: 'email is not cadastred yet' };
         const comparePasswords = bcrypt_1.default.compareSync(data.password, user.password);
         if (!comparePasswords) {
             throw { type: 'unauthorized' };

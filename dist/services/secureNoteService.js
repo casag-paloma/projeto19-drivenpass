@@ -38,7 +38,7 @@ function createSecureNote(userId, data) {
     return __awaiter(this, void 0, void 0, function* () {
         const secureNote = yield secureNoteRepository.geteSecureNoteByTitle(userId, data.title);
         if (secureNote)
-            throw { type: 'conflict' };
+            throw { type: 'conflict', message: 'this title is already in use' };
         const secureNoteData = Object.assign({ userId }, data);
         yield secureNoteRepository.create(secureNoteData);
     });
