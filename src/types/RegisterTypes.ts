@@ -7,4 +7,6 @@ export type ISecureNoteType = Omit<SecureNote, 'id'>
 export type ISecureNoteData = Omit<ISecureNoteType, 'userId'>
 
 export type ICardType = Omit<Card, 'id'>
+
 export type IWifiType = Omit<Wifi, 'id'>
+export type IWifiData = Omit<IWifiType, 'userId'>
