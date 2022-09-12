@@ -17,7 +17,7 @@ function returnBoolean(string:string){
 export async function createCard(userId:number, data:ICardData){
     const card = await cardRepository.getCardByTitle(userId, data.title)
 
-    if(card) throw {type: 'conflict'}
+    if(card) throw {type: 'conflict', message: 'this title is already in use'}
 
     const encryptSecurityCode = cryptr.encrypt(data.securityCode)
     const encryptPassword = cryptr.encrypt(data.password)

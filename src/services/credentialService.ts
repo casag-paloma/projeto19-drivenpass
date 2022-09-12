@@ -10,7 +10,7 @@ const cryptr = new Cryptr(CRYPTR_SECRET_KEY);
 export async function createCredential(userId:number, data:ICredentialData){
     
     const credentialTitle = await credentialRepository.getCredentialByTitle(userId, data.title)
-    if(credentialTitle) throw {type: 'conflict'}
+    if(credentialTitle) throw {type: 'conflict', message: 'this title is already in use'}
 
     const encryptPassword = cryptr.encrypt(data.password)
 

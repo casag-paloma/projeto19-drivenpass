@@ -22,7 +22,7 @@ export async function login(data:IUserData) {
 
     const user = await userRepository.getUserByEmail(data.email)
 
-    if(!user) throw{ type: 'not_found'};
+    if(!user) throw{ type: 'not_found', message: 'email is not cadastred yet'};
     const comparePasswords = bcrypt.compareSync(data.password, user.password);
     if(!comparePasswords){
         throw{ type: 'unauthorized'}

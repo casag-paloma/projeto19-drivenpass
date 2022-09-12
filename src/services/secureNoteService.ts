@@ -5,7 +5,7 @@ export async function createSecureNote(userId:number, data:ISecureNoteData){
 
     const secureNote = await secureNoteRepository.geteSecureNoteByTitle(userId, data.title)
 
-    if(secureNote) throw {type: 'conflict'}
+    if(secureNote) throw {type: 'conflict', message: 'this title is already in use'}
 
     const secureNoteData = {
         userId,
