@@ -41,3 +41,16 @@ export async function getWifis(userId:number) {
 
     return wifis;
 };
+
+export async function getWifiById(id:number, userId:number) {
+
+    const wifiId = await wifiRepository.getwWifiById(id)
+    if(!wifiId) throw {type: "not_found"};
+
+    const wifi = await wifiRepository.getWifiByIdAndUserId(id, userId);
+    if(!wifi) throw {type: "unauthorized"};
+
+    const result = decryptPassword(wifi);
+
+    return result;    
+};

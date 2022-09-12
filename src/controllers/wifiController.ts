@@ -24,9 +24,10 @@ export async function getWifiById (req: Request, res: Response) {
     const id = req.params.id;
 
     if(isNaN(Number(id))) return res.sendStatus(422);
-    
 
-    res.status(200).send("wifi");
+    const wifi = await wifiService.getWifiById(Number(id), userId);
+
+    res.status(200).send(wifi);
 };
 
 export async function deleteWifi (req: Request, res: Response) {
