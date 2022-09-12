@@ -66,3 +66,17 @@ export async function getCards(userId:number) {
 
     return cards;
 };
+
+export async function getCardById(id:number, userId:number) {
+
+    const cardId = await cardRepository.getCardById(id)
+    if(!cardId) throw {type: "not_found"};
+
+    const card = await cardRepository.getCardByIdAndUserId(id, userId);
+    if(!card) throw {type: "unauthorized"};
+
+    const result = decryptSecurityCodeAndPassword(card);
+
+    return result;    
+};
+

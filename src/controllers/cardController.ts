@@ -24,7 +24,8 @@ export async function getCardById (req: Request, res: Response) {
 
     if(isNaN(Number(id))) return res.sendStatus(422);
 
-    res.status(200).send("Card");
+    const card = await cardService.getCardById(Number(id), userId)
+    res.status(200).send(card);
 };
 
 export async function deleteCard (req: Request, res: Response) {
