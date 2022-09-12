@@ -13,7 +13,6 @@ function returnBoolean(string:string){
 
 
 export async function createCard(userId:number, data:ICardData){
-    console.log(data)
     const card = await cardRepository.getCardByTitle(userId, data.title)
 
     if(card) throw {type: 'conflict'}
@@ -24,8 +23,6 @@ export async function createCard(userId:number, data:ICardData){
     if(typeof(data.isVirtual) === 'string'){
         data.isVirtual = returnBoolean(data.isVirtual)
     }
-    console.log(data.isVirtual);
-
     
     const cardData = {
         userId,
@@ -41,4 +38,31 @@ export async function createCard(userId:number, data:ICardData){
 
     await cardRepository.createCard(cardData);
 
+};
+
+function decryptSecurityCodeAndPassword(data: ICardData){
+    console.log(CRYPTR_SECRET_KEY);
+
+    const decryptedSecurityCode = cryptr.decrypt(data.securityCode);
+    const decryptedPassword = cryptr.decrypt(data.password);
+
+    console.log(decryptedPassword);
+    return {
+        title: data.title,
+        cardNumber: data.cardNumber,
+        cardHolderName: data.cardHolderName,
+        securityCode: decryptedSecurityCode,
+        expirationDate: data.expirationDate,
+        password: decryptedPassword,
+        isVirtual: data.isVirtual,
+        type:data.type
+    }
+}
+
+export async function getCards(userId:number) {
+    const result = await cardRepository.getCardsByUserId(userId);
+    console.log(result);
+    const cards = result.map((data: ICardData) => decryptSecurityCodeAndPassword(data))
+
+    return cards;
 };

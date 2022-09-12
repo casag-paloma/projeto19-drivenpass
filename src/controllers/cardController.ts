@@ -11,10 +11,11 @@ export async function createCard (req: Request, res: Response) {
     res.sendStatus(201);
 };
 
-export async function getCard (req: Request, res: Response) {
+export async function getCards (req: Request, res: Response) {
     const {userId} = res.locals.tokenData;
 
-    res.status(200).send("Cards");
+    const cards = await cardService.getCards(userId);
+    res.status(200).send(cards);
 };
 
 export async function getCardById (req: Request, res: Response) {
