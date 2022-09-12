@@ -54,3 +54,14 @@ export async function getWifiById(id:number, userId:number) {
 
     return result;    
 };
+
+export async function deleteWifi(id:number, userId:number) {
+
+    const wifiId = await wifiRepository.getwWifiById(id)
+    if(!wifiId) throw {type: "not_found"};
+
+    const wifi = await wifiRepository.getWifiByIdAndUserId(id, userId);
+    if(!wifi) throw {type: "unauthorized"};
+
+    await wifiRepository.deleteWifi(id);
+};

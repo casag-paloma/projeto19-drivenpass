@@ -36,6 +36,8 @@ export async function deleteWifi (req: Request, res: Response) {
     const id = req.params.id;
 
     if(isNaN(Number(id))) return res.sendStatus(422);
+
+    await wifiService.deleteWifi(Number(id), userId)
     
     res.sendStatus(204);
 };
