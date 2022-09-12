@@ -5,7 +5,6 @@ import * as secureNoteService from "../services/secureNoteService";
 export async function createSecureNote (req: Request, res: Response) {
     const {userId} = res.locals.tokenData;
     const data = req.body
-    console.log(userId, data);
 
     await secureNoteService.createSecureNote(userId, data)
     res.sendStatus(201);

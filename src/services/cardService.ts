@@ -1,6 +1,8 @@
+import { Card } from "@prisma/client";
 import { ICardData } from "../types/RegisterTypes";
 import * as cardRepository from "../repositories/cardRepository";
 import Cryptr from "cryptr";
+
 
 const CRYPTR_SECRET_KEY: string = process.env.CRYPTR_SECRET_KEY_CARD ?? ' '
 const cryptr = new Cryptr(CRYPTR_SECRET_KEY);
@@ -40,14 +42,13 @@ export async function createCard(userId:number, data:ICardData){
 
 };
 
-function decryptSecurityCodeAndPassword(data: ICardData){
-    console.log(CRYPTR_SECRET_KEY);
+function decryptSecurityCodeAndPassword(data: Card){
 
     const decryptedSecurityCode = cryptr.decrypt(data.securityCode);
     const decryptedPassword = cryptr.decrypt(data.password);
 
-    console.log(decryptedPassword);
     return {
+        id: data.id,
         title: data.title,
         cardNumber: data.cardNumber,
         cardHolderName: data.cardHolderName,
@@ -61,8 +62,7 @@ function decryptSecurityCodeAndPassword(data: ICardData){
 
 export async function getCards(userId:number) {
     const result = await cardRepository.getCardsByUserId(userId);
-    console.log(result);
-    const cards = result.map((data: ICardData) => decryptSecurityCodeAndPassword(data))
+    const cards = result.map((data: Card) => decryptSecurityCodeAndPassword(data))
 
     return cards;
 };

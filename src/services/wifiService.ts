@@ -1,3 +1,4 @@
+import { Wifi } from "@prisma/client";
 import { IWifiData } from "../types/RegisterTypes";
 import * as wifiRepository from "../repositories/wifiRepository";
 import Cryptr from "cryptr";
@@ -21,13 +22,12 @@ export async function createWifi(userId:number, data:IWifiData){
 
 };
 
-function decryptPassword(data: IWifiData){
-    console.log(CRYPTR_SECRET_KEY);
+function decryptPassword(data: Wifi){
 
     const decryptedPassword = cryptr.decrypt(data.password);
 
-    console.log(decryptedPassword);
     return {
+        id: data.id,
         title: data.title,
         name: data.name,
         password: decryptedPassword
@@ -36,8 +36,7 @@ function decryptPassword(data: IWifiData){
 
 export async function getWifis(userId:number) {
     const result = await wifiRepository.getWifisByUserId(userId);
-    console.log(result);
-    const wifis = result.map((data: IWifiData) => decryptPassword(data))
+    const wifis = result.map((data: Wifi) => decryptPassword(data))
 
     return wifis;
 };

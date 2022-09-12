@@ -4,7 +4,6 @@ import { prisma } from "../config/database";
 export async function create(credential: ICredentialType) {
 
     await prisma.credential.create({data:credential})
-
 };
 
 export async function getCredentialByTitle(userId: number, title:string) {
@@ -19,43 +18,29 @@ export async function getCredentialByTitle(userId: number, title:string) {
 
 export async function getCredentialsByUserId(userId: number) {
 
-    const credentials = await prisma.credential.findMany({where:{
-        userId
-    }});
-
+    const credentials = await prisma.credential.findMany({where:{userId}});
     return credentials;
 };
 
 export async function getCredentialsById( id: number) {
 
-    const credential = await prisma.credential.findFirst({where:{
-        id
-    }});
-    console.log(credential);
+    const credential = await prisma.credential.findFirst({where:{id}});
     return credential;
 };
 
 export async function getCredentialsByIdAndUserId(id:number,userId: number) {
-    console.log(id, userId)
 
     const credential = await prisma.credential.findFirst({where:{
         id,
         userId
     }});
-    console.log(credential)
 
     return credential;
 };
 
-export async function deleteCredential(id:number,userId: number) {
-    console.log(id, userId)
+export async function deleteCredential(id:number) {
 
-    const credential = await prisma.credential.delete({where:{
-        id
-    }});
-    console.log(credential)
-
-    return credential;
+    await prisma.credential.delete({where:{id}});
 };
 
 

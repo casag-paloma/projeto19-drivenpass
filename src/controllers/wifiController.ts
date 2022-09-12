@@ -5,7 +5,6 @@ import * as wifiService from "../services/wifiService"
 export async function createWifi (req: Request, res: Response) {
     const {userId} = res.locals.tokenData;
     const data = req.body
-    console.log(userId, data);
 
     await wifiService.createWifi(userId, data);
     res.sendStatus(201);

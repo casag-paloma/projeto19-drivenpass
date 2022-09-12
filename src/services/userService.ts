@@ -6,7 +6,6 @@ import jwt from 'jsonwebtoken';
 export async function createUser(data:IUserData) {
 
     const user = await userRepository.getUserByEmail(data.email)
-    console.log(user)
 
     if(user) throw{ type: 'conflict'};
 
@@ -24,7 +23,6 @@ export async function login(data:IUserData) {
     const user = await userRepository.getUserByEmail(data.email)
 
     if(!user) throw{ type: 'not_found'};
-    console.log(data, user)
     const comparePasswords = bcrypt.compareSync(data.password, user.password);
     if(!comparePasswords){
         throw{ type: 'unauthorized'}
@@ -33,11 +31,10 @@ export async function login(data:IUserData) {
     const tokenData = {userId: user.id}
 
     const SECRET : string = process.env.TOKEN_SECRET_KEY ?? '';
-    const EXPIRES_IN = process.env.TOKEN_EXPIRES ?? '';
+    const EXPIRES_IN = process.env.TOKEN_EXPIRES_IN ?? '';
     const jwtConfig = {
-        expiresIn: '300 minutes'
+        expiresIn: EXPIRES_IN
     };
-    console.log(SECRET, jwtConfig)
     
     const token = jwt.sign(tokenData, SECRET, jwtConfig);
 

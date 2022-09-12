@@ -11,6 +11,10 @@ export function errorHandlerMiddleware(
 ){
     console.log(err)
     if(err.type) {
+        if(err.message){
+            return res.status(errorTypeToStatusCode(err.type)).send(err.message)
+        }
+        
         return res.sendStatus(errorTypeToStatusCode(err.type))
     }
 

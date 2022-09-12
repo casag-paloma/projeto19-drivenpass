@@ -20,7 +20,6 @@ export async function getwWifiById( id: number) {
 };
 
 export async function getWifiByIdAndUserId(id:number,userId: number) {
-    console.log(id, userId)
 
     const wifi = await prisma.wifi.findFirst({where:{
         id,

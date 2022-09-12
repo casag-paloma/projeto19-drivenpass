@@ -17,8 +17,6 @@ export async function createSecureNote(userId:number, data:ISecureNoteData){
 
 export async function getSecureNotes(userId:number) {
     const secureNotes = await secureNoteRepository.getSecureNotesByUserId(userId);
-    console.log(secureNotes);
-
     return secureNotes;
 };
 
@@ -41,6 +39,6 @@ export async function deleteSecureNote(id:number, userId:number) {
     const secureNote = await secureNoteRepository.getSecureNoteByIdAndUserId(id, userId);
     if(!secureNote) throw {type: "unauthorized"};
 
-    await secureNoteRepository.deleteSecureNote(id, userId);
+    await secureNoteRepository.deleteSecureNote(id);
 };
 

@@ -31,13 +31,11 @@ export async function getCardById( id: number) {
 };
 
 export async function getCardByIdAndUserId(id:number,userId: number) {
-    console.log(id, userId)
 
     const card = await prisma.card.findFirst({where:{
         id,
         userId
     }});
-    console.log(card)
 
     return card;
 };
@@ -46,7 +44,6 @@ export async function deleteCard(id:number) {
 
     await prisma.card.delete({where:{id}});
 };
-
 
 
 

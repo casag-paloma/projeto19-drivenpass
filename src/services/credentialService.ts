@@ -1,6 +1,7 @@
-import { ICredentialData, ICredentialType } from "../types/RegisterTypes";
+import { ICredentialData } from "../types/RegisterTypes";
 import * as credentialRepository from "../repositories/credentialRepository";
 import Cryptr from "cryptr";
+import { Credential } from "@prisma/client";
 
 const CRYPTR_SECRET_KEY: string = process.env.CRYPTR_SECRET_KEY ?? ' '
 const cryptr = new Cryptr(CRYPTR_SECRET_KEY);
@@ -26,13 +27,11 @@ export async function createCredential(userId:number, data:ICredentialData){
 
 };
 
-function decryptPassword(data: ICredentialData){
-    console.log(CRYPTR_SECRET_KEY);
+function decryptPassword(data: Credential){
 
     const decryptedPassword = cryptr.decrypt(data.password);
-
-    console.log(decryptedPassword);
     return {
+        id: data.id,
         title: data.title,
         url: data.url,
         username: data.username,
@@ -41,9 +40,8 @@ function decryptPassword(data: ICredentialData){
 }
 
 export async function getCredential(userId:number) {
-    const result = await credentialRepository.getCredentialsByUserId(userId);
-    console.log(result);
-    const credentials = result.map((data: ICredentialData) => decryptPassword(data))
+    const result  = await credentialRepository.getCredentialsByUserId(userId);
+    const credentials = result.map((data: Credential) => decryptPassword(data))
 
     return credentials;
 };
@@ -69,5 +67,5 @@ export async function deleteCredential(id:number, userId:number) {
     const credential = await credentialRepository.getCredentialsByIdAndUserId(id, userId);
     if(!credential) throw {type: "unauthorized"};
 
-    await credentialRepository.deleteCredential(id, userId);
+    await credentialRepository.deleteCredential(id);
 };
