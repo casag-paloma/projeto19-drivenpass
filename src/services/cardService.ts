@@ -80,3 +80,14 @@ export async function getCardById(id:number, userId:number) {
     return result;    
 };
 
+export async function deleteCard(id:number, userId:number) {
+
+    const cardId = await cardRepository.getCardById(id)
+    if(!cardId) throw {type: "not_found"};
+
+    const card = await cardRepository.getCardByIdAndUserId(id, userId);
+    if(!card) throw {type: "unauthorized"};
+
+    await cardRepository.deleteCard(id);
+};
+

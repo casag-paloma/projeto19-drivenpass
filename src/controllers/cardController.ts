@@ -34,6 +34,8 @@ export async function deleteCard (req: Request, res: Response) {
     const id = req.params.id;
 
     if(isNaN(Number(id))) return res.sendStatus(422);
+
+    await cardService.deleteCard(Number(id), userId);
     
     res.sendStatus(204);
 };
